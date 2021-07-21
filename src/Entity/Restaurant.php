@@ -68,6 +68,11 @@ class Restaurant
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $menu;
+
 
     public function __construct()
     {
@@ -203,6 +208,18 @@ class Restaurant
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getMenu(): ?string
+    {
+        return $this->menu;
+    }
+
+    public function setMenu(?string $menu): self
+    {
+        $this->menu = $menu;
 
         return $this;
     }

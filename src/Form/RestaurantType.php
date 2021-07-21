@@ -19,13 +19,16 @@ class RestaurantType extends AbstractType
         $builder
             ->add('name')
             ->add('shortDescription')
-            ->add('contenu', CKEditorType::class, [
-                'config_name' => 'admin_config'
-            ])
             ->add('pictureFile', VichFileType::class, [
                 'required'      => false,
                 'allow_delete'  => true, // not mandatory, default is true
                 'download_uri' => true, // not mandatory, default is true
+            ])
+            ->add('contenu', CKEditorType::class, [
+                'config_name' => 'admin_config'
+            ])
+            ->add('menu', CKEditorType::class, [
+                'config_name' => 'admin_config'
             ]);
     }
 

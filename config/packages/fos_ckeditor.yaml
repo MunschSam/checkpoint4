@@ -6,7 +6,7 @@ fos_ck_editor:
             filebrowserBrowseRoute: elfinder
             filebrowserBrowseRouteParameters:
                     
-        commentBlog_config:
+        comment_config:
             toolbar: "comment_tools"
 
 

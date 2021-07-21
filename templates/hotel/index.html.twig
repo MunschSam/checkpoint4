@@ -23,7 +23,7 @@
                 <td>{{ hotel.id }}</td>
                 <td>{{ hotel.picture }}</td>
                 <td>{{ hotel.shortDescription }}</td>
-                <td>{{ hotel.contenu }}</td>
+                <td>{{ hotel.contenu|raw }}</td>
                 <td>{{ hotel.date ? hotel.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ hotel.updatedAt ? hotel.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

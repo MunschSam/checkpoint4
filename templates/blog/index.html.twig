@@ -23,7 +23,7 @@
                 <td>{{ blog.id }}</td>
                 <td>{{ blog.picture }}</td>
                 <td>{{ blog.shortDescription }}</td>
-                <td>{{ blog.contenu }}</td>
+                <td>{{ blog.contenu|raw }}</td>
                 <td>{{ blog.date ? blog.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ blog.updatedAt ? blog.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

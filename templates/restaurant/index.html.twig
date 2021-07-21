@@ -23,7 +23,7 @@
                 <td>{{ restaurant.id }}</td>
                 <td>{{ restaurant.picture }}</td>
                 <td>{{ restaurant.shortDescription }}</td>
-                <td>{{ restaurant.contenu }}</td>
+                <td>{{ restaurant.contenu|raw }}</td>
                 <td>{{ restaurant.date ? restaurant.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ restaurant.updatedAt ? restaurant.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

@@ -68,6 +68,11 @@ class Hotel
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tourisme;
+
     public function __construct()
     {
         $this->commentHotels = new ArrayCollection();
@@ -202,6 +207,18 @@ class Hotel
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getTourisme(): ?string
+    {
+        return $this->tourisme;
+    }
+
+    public function setTourisme(?string $tourisme): self
+    {
+        $this->tourisme = $tourisme;
 
         return $this;
     }
