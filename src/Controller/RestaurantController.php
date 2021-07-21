@@ -9,6 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\CommentRestaurant;
+use App\Form\CommentRestaurantType;
+use App\Repository\CommentRestaurantRepository;
 
 /**
  * @Route("/restaurant")
@@ -31,11 +34,11 @@ class RestaurantController extends AbstractController
     public function new(Request $request): Response
     {
         $restaurant = new Restaurant();
-        $restaurant->setDate(new \DateTime('now'));
         $form = $this->createForm(RestaurantType::class, $restaurant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $restaurant->setDate(new \DateTime('now'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($restaurant);
             $entityManager->flush();
@@ -50,12 +53,28 @@ class RestaurantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="restaurant_show", methods={"GET"})
+     * @Route("/{id}", name="restaurant_show")
      */
-    public function show(Restaurant $restaurant): Response
+    public function show(Restaurant $restaurant, Request $request): Response
     {
+        $commentRestaurant = new commentRestaurant();
+        $commentForm = $this->createForm(CommentRestaurantType::class, $commentRestaurant);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $commentRestaurant->setCommentDate(new \DateTime());
+            $commentRestaurant->setRestaurant($restaurant);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commentRestaurant);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('restaurant_show', ['id' => $restaurant->getId()]);
+        }
+
         return $this->render('restaurant/show.html.twig', [
-            'restaurant' => $restaurant,
+            'restaurant' => $restaurant, 'comment_restaurant' => $commentRestaurant,
+            'commentForm' => $commentForm->createView()
         ]);
     }
 
@@ -91,5 +110,24 @@ class RestaurantController extends AbstractController
         }
 
         return $this->redirectToRoute('restaurant_index');
+    }
+
+
+    /**
+     * @Route("/delete/{id}", name="comment_restaurant_delete", methods={"GET","POST"}, requirements={"id":"\d+"})
+     */
+
+    public function commentDelete(Request $request, CommentRestaurant $commentRestaurant): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $commentRestaurant->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($commentRestaurant);
+            $entityManager->flush();
+            /** @phpstan-ignore-next-line */
+            return $this->redirectToRoute('restaurant_show', ['id' => $commentRestaurant->getRestaurant()->getId()]);
+        }
+        return $this->render('comment_restaurant/_delete.html.twig', [
+            'comment_restaurant' => $commentRestaurant,
+        ]);
     }
 }

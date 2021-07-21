@@ -31,11 +31,11 @@ class BlogController extends AbstractController
     public function new(Request $request): Response
     {
         $blog = new Blog();
-        $blog->setDate(new \DateTime('now'));
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $blog->setDate(new \DateTime('now'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($blog);
             $entityManager->flush();

@@ -27,6 +27,11 @@ class CommentHotel
      */
     private $commentDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="commentHotels")
+     */
+    private $hotel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class CommentHotel
     public function setCommentDate(?\DateTimeInterface $commentDate): self
     {
         $this->commentDate = $commentDate;
+
+        return $this;
+    }
+
+    public function getHotel(): ?Hotel
+    {
+        return $this->hotel;
+    }
+
+    public function setHotel(?Hotel $hotel): self
+    {
+        $this->hotel = $hotel;
 
         return $this;
     }
