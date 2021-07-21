@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\CommentRestaurant;
 use App\Form\CommentRestaurantType;
 use App\Repository\CommentRestaurantRepository;
+use App\Service\Slugify;
 
 /**
  * @Route("/restaurant")
@@ -31,7 +32,7 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/new", name="restaurant_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $restaurant = new Restaurant();
         $form = $this->createForm(RestaurantType::class, $restaurant);
@@ -39,6 +40,8 @@ class RestaurantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $restaurant->setDate(new \DateTime('now'));
+            $slug = $slugify->generate($restaurant->getName());
+            $restaurant->setSlug($slug);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($restaurant);
             $entityManager->flush();
@@ -53,9 +56,9 @@ class RestaurantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="restaurant_show")
+     * @Route("/{slug}", name="restaurant_show")
      */
-    public function show(Restaurant $restaurant, Request $request): Response
+    public function show(Restaurant $restaurant, Request $request, Slugify $slugify): Response
     {
         $commentRestaurant = new commentRestaurant();
         $commentForm = $this->createForm(CommentRestaurantType::class, $commentRestaurant);
@@ -79,14 +82,16 @@ class RestaurantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="restaurant_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="restaurant_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Restaurant $restaurant): Response
+    public function edit(Request $request, Restaurant $restaurant, Slugify $slugify): Response
     {
         $form = $this->createForm(RestaurantType::class, $restaurant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($restaurant->getName());
+            $restaurant->setSlug($slug);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('restaurant_index');

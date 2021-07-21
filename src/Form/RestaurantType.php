@@ -17,6 +17,7 @@ class RestaurantType extends AbstractType
         *@SuppressWarnings(PHPMD)
         **/
         $builder
+            ->add('name')
             ->add('shortDescription')
             ->add('contenu', CKEditorType::class, [
                 'config_name' => 'admin_config'

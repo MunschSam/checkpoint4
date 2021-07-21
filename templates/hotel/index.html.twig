@@ -27,8 +27,8 @@
                 <td>{{ hotel.date ? hotel.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ hotel.updatedAt ? hotel.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('hotel_show', {'id': hotel.id}) }}">show</a>
-                    <a href="{{ path('hotel_edit', {'id': hotel.id}) }}">edit</a>
+                    <a href="{{ path('hotel_show', {'slug': hotel.slug}) }}">show</a>
+                    <a href="{{ path('hotel_edit', {'slug': hotel.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

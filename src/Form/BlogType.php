@@ -17,6 +17,7 @@ class BlogType extends AbstractType
         *@SuppressWarnings(PHPMD)
         **/
         $builder
+            ->add('sujet')
             ->add('shortDescription')
             ->add('contenu', CKEditorType::class, [
                 'config_name' => 'admin_config'

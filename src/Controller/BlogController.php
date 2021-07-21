@@ -9,6 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\CommentBlog;
+use App\Form\CommentBlogType;
+use App\Repository\CommentBlogRepository;
+use App\Service\Slugify;
 
 /**
  * @Route("/blog")
@@ -28,7 +32,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/new", name="blog_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $blog = new Blog();
         $form = $this->createForm(BlogType::class, $blog);
@@ -36,6 +40,8 @@ class BlogController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $blog->setDate(new \DateTime('now'));
+            $slug = $slugify->generate($blog->getSujet());
+            $blog->setSlug($slug);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($blog);
             $entityManager->flush();
@@ -50,24 +56,41 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="blog_show", methods={"GET"})
+     * @Route("/{slug}", name="blog_show")
      */
-    public function show(Blog $blog): Response
+    public function show(Blog $blog, Slugify $slugify, Request $request): Response
     {
+        $commentBlog = new commentBlog();
+        $commentForm = $this->createForm(CommentBlogType::class, $commentBlog);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $commentBlog->setCommentDate(new \DateTime());
+            $commentBlog->setBlog($blog);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commentBlog);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('blog_show', ['slug' => $blog->getSlug()]);
+        }
+       
         return $this->render('blog/show.html.twig', [
-            'blog' => $blog,
+            'blog' => $blog, 'comment_blog' => $commentBlog, 'commentForm' => $commentForm->createView()
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="blog_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="blog_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Blog $blog): Response
+    public function edit(Request $request, Blog $blog, Slugify $slugify): Response
     {
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($blog->getSujet());
+            $blog->setSlug($slug);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('blog_index');

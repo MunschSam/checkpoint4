@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\CommentHotel;
 use App\Form\CommentHotelType;
 use App\Repository\CommentHotelRepository;
+use App\Service\Slugify;
 
 /**
  * @Route("/hotel")
@@ -31,7 +32,7 @@ class HotelController extends AbstractController
     /**
      * @Route("/new", name="hotel_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $hotel = new Hotel();
         $form = $this->createForm(HotelType::class, $hotel);
@@ -39,6 +40,8 @@ class HotelController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $hotel->setDate(new \DateTime('now'));
+            $slug = $slugify->generate($hotel->getName());
+            $hotel->setSlug($slug);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($hotel);
             $entityManager->flush();
@@ -53,9 +56,9 @@ class HotelController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="hotel_show")
+     * @Route("/{slug}", name="hotel_show")
      */
-    public function show(Hotel $hotel, Request $request): Response
+    public function show(Hotel $hotel, Request $request, Slugify $slugify): Response
     {
         $commentHotel = new commentHotel();
         $commentForm = $this->createForm(CommentHotelType::class, $commentHotel);
@@ -69,7 +72,7 @@ class HotelController extends AbstractController
             $entityManager->persist($commentHotel);
             $entityManager->flush();
 
-            return $this->redirectToRoute('hotel_show', ['id' => $hotel->getId()]);
+            return $this->redirectToRoute('hotel_show', ['slug' => $hotel->getSlug()]);
         }
 
         return $this->render('hotel/show.html.twig', [
@@ -78,14 +81,16 @@ class HotelController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="hotel_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="hotel_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Hotel $hotel): Response
+    public function edit(Request $request, Hotel $hotel, Slugify $slugify): Response
     {
         $form = $this->createForm(HotelType::class, $hotel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($hotel->getName());
+            $hotel->setSlug($slug);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('hotel_index');

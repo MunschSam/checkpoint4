@@ -27,8 +27,8 @@
                 <td>{{ blog.date ? blog.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ blog.updatedAt ? blog.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('blog_show', {'id': blog.id}) }}">show</a>
-                    <a href="{{ path('blog_edit', {'id': blog.id}) }}">edit</a>
+                    <a href="{{ path('blog_show', {'slug': blog.slug}) }}">show</a>
+                    <a href="{{ path('blog_edit', {'slug': blog.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

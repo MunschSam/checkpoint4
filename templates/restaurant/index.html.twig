@@ -27,8 +27,8 @@
                 <td>{{ restaurant.date ? restaurant.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ restaurant.updatedAt ? restaurant.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}">show</a>
-                    <a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">edit</a>
+                    <a href="{{ path('restaurant_show', {'slug': restaurant.slug}) }}">show</a>
+                    <a href="{{ path('restaurant_edit', {'slug': restaurant.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

@@ -17,6 +17,7 @@ class HotelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('name')
             ->add('shortDescription')
             ->add('contenu', CKEditorType::class, [
                 'config_name' => 'admin_config'
