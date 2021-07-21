@@ -130,11 +130,36 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
+        },
+        "files": [
+            "config/packages/fos_ckeditor.yaml"
+        ]
+    },
     "friendsoftwig/twigcs": {
         "version": "v5.0.0"
     },
     "gitonomy/gitlib": {
         "version": "v1.2.3"
+    },
+    "helios-ag/fm-elfinder-bundle": {
+        "version": "10.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "10.0",
+            "ref": "addd79a9903ee92664f4cff61eb6cdd1b95945e7"
+        },
+        "files": [
+            "config/packages/fm_elfinder.yaml",
+            "config/routes/fm_elfinder.yaml"
+        ]
     },
     "jakub-onderka/php-console-color": {
         "version": "v0.2"
@@ -255,6 +280,9 @@
         "files": [
             "phpcs.xml.dist"
         ]
+    },
+    "studio-42/elfinder": {
+        "version": "2.1.59"
     },
     "symfony/asset": {
         "version": "v5.2.7"

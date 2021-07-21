@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class BlogType extends AbstractType
 {
@@ -17,7 +18,9 @@ class BlogType extends AbstractType
         **/
         $builder
             ->add('shortDescription')
-            ->add('contenu')
+            ->add('contenu', CKEditorType::class, [
+                'config_name' => 'admin_config'
+            ])
             ->add('pictureFile', VichFileType::class, [
                 'required'      => false,
                 'allow_delete'  => true, // not mandatory, default is true
