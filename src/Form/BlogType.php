@@ -10,8 +10,11 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class BlogType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /**
+        *@SuppressWarnings(PHPMD)
+        **/
         $builder
             ->add('shortDescription')
             ->add('contenu')
@@ -22,7 +25,7 @@ class BlogType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Blog::class,

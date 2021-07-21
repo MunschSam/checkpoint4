@@ -10,7 +10,10 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class HotelType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+    *@SuppressWarnings(PHPMD)
+    **/
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('shortDescription')
@@ -22,7 +25,7 @@ class HotelType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Hotel::class,
