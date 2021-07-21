@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CommentHotel index{% endblock %}
+
+{% block body %}
+    <h1>CommentHotel index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Comment</th>
+                <th>CommentDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comment_hotel in comment_hotels %}
+            <tr>
+                <td>{{ comment_hotel.id }}</td>
+                <td>{{ comment_hotel.comment }}</td>
+                <td>{{ comment_hotel.commentDate ? comment_hotel.commentDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('comment_hotel_show', {'id': comment_hotel.id}) }}">show</a>
+                    <a href="{{ path('comment_hotel_edit', {'id': comment_hotel.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('comment_hotel_new') }}">Create new</a>
+{% endblock %}

@@ -49,6 +49,7 @@ class Restaurant
      */
     private $commentRestaurants;
 
+
     public function __construct()
     {
         $this->commentRestaurants = new ArrayCollection();

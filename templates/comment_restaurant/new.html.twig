@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CommentRestaurant{% endblock %}
+
+{% block body %}
+    <h1>Create new CommentRestaurant</h1>
+
+    {{ include('comment_restaurant/_form.html.twig') }}
+
+    <a href="{{ path('comment_restaurant_index') }}">back to list</a>
+{% endblock %}

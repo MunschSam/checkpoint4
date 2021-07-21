@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\HotelRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,21 +41,6 @@ class Hotel
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lieu;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CommentHotel::class, mappedBy="hotel")
-     */
-    private $commentHotels;
-
-    public function __construct()
-    {
-        $this->commentHotels = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -120,48 +103,6 @@ class Hotel
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getLieu(): ?string
-    {
-        return $this->lieu;
-    }
-
-    public function setLieu(?string $lieu): self
-    {
-        $this->lieu = $lieu;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CommentHotel[]
-     */
-    public function getCommentHotels(): Collection
-    {
-        return $this->commentHotels;
-    }
-
-    public function addCommentHotel(CommentHotel $commentHotel): self
-    {
-        if (!$this->commentHotels->contains($commentHotel)) {
-            $this->commentHotels[] = $commentHotel;
-            $commentHotel->setHotel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentHotel(CommentHotel $commentHotel): self
-    {
-        if ($this->commentHotels->removeElement($commentHotel)) {
-            // set the owning side to null (unless already changed)
-            if ($commentHotel->getHotel() === $this) {
-                $commentHotel->setHotel(null);
-            }
-        }
 
         return $this;
     }
