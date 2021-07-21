@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\BlogRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=BlogRepository::class)
+ * @Vich\Uploadable
  */
 class Blog
 {
@@ -18,9 +21,16 @@ class Blog
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
+
+    /**
+    * @Vich\UploadableField(mapping="picture_file", fileNameProperty="picture")
+    * @var File
+    */
+    private $pictureFile;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -105,5 +115,19 @@ class Blog
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function setPictureFile(File $image = null): Blog
+    {
+        $this->pictureFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
     }
 }

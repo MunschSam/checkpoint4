@@ -1,0 +1,16 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+
+        picture_file:
+            uri_prefix: /images/blog
+            upload_destination: '%upload_directory%/blog'
+
+        hotel_file:
+            uri_prefix: /images/hotel
+            upload_destination: '%upload_directory%/hotel'
+
+        restaurant_file:
+            uri_prefix: /images/restaurant
+            upload_destination: '%upload_directory%/restaurant'

@@ -6,9 +6,12 @@ use App\Repository\HotelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=HotelRepository::class)
+ * @Vich\Uploadable
  */
 class Hotel
 {
@@ -23,6 +26,12 @@ class Hotel
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
+
+    /**
+    * @Vich\UploadableField(mapping="hotel_file", fileNameProperty="picture")
+    * @var File
+    */
+    private $pictureFile;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -147,5 +156,19 @@ class Hotel
         }
 
         return $this;
+    }
+
+    public function setPictureFile(File $image = null): Hotel
+    {
+        $this->pictureFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
     }
 }
