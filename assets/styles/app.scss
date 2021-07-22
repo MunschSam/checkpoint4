@@ -3,3 +3,14 @@ body {
     background-color: $main;
     color: $text;
 }
+
+.uk-button,
+.uk-label {
+    background-color: #1e847f;
+    color: white;
+}
+
+.uk-button:hover {
+    background-color: #1e847f;
+    color: white;
+}

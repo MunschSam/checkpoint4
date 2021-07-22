@@ -3,48 +3,59 @@
 {% block title %}Hotel{% endblock %}
 
 {% block body %}
-    <h1>Hotel</h1>
+    <h1 class="uk-text-center">{{hotel.name}}</h1>
+<div class="uk-margin-medium-top uk-margin-right uk-margin-medium-left">
+    <a class="uk-button uk-button-default uk-box-shadow-large uk-border-pill" href="{{ path('hotel_edit', {'slug': hotel.slug}) }}">editer</a>
+</div>
+             
+    <div class="uk-margin-medium-top uk-margin-medium-left uk-margin-medium-right uk-card uk-card-default uk-card-body uk-border-rounded">
+    
+<hr class="uk-divider-icon">
+        <div class="content">
+            {{ hotel.contenu|raw }}
+        </div>
+<hr class="uk-divider-icon">
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ hotel.id }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ hotel.picture }}</td>
-            </tr>
-            <tr>
-                <th>ShortDescription</th>
-                <td>{{ hotel.shortDescription }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ hotel.contenu|raw }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ hotel.date ? hotel.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ hotel.updatedAt ? hotel.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="uk-flex uk-margin-medium-top">
+<div class="uk-width-2-3 uk-card uk-card-default uk-card-body uk-border-rounded uk-margin-medium-left">
+<hr class="uk-divider-icon">
+    {{ hotel.tourisme|raw }}
+<hr class="uk-divider-icon">
+</div>
+<div class="uk-width-1-3 uk-card uk-card-default uk-card-body uk-border-rounded uk-margin-medium-right uk-margin-medium-left">
+<hr class="uk-divider-icon">
+<h1>avis</h1>
+<hr class="uk-divider-icon">
+</div>
+</div>
+    <a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" href="{{ path('hotel_index') }}">Retour</a>
 
-    <a href="{{ path('hotel_index') }}">back to list</a>
-
-    <a href="{{ path('hotel_edit', {'slug': hotel.slug}) }}">edit</a>
-
-    {{ include('hotel/_delete_form.html.twig') }}
-    {{ include('comment_hotel/_form.html.twig') }}
+    <div class="uk-card uk-card-default uk-width-1-2 uk-text-center uk-align-center uk-border-rounded uk-box-shadow-large">
+<p class="uk-margin uk-padding-small uk-text-meta uk-text-left">Laiser un commentaire</p>
+{% include('comment_hotel/_form.html.twig') %}
+</div>
 
     {% for comment_hotel in hotel.commentHotels|reverse %}
-        {{ comment_hotel.comment }}
-        {{ comment_hotel.commentDate|date("m/d/Y") }}
-        {{ include('comment_hotel/_delete.html.twig') }}
-        <br>
+
+        <div class="uk-align-center uk-box-shadow-large uk-card uk-card-default uk-card-body uk-width-1-2@m uk-border-rounded uk-margin-bottom uk-margin-remove-top">
+    <header class="uk-comment-header">
+        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+            <div class="uk-width-expand">
+            </div>
+        </div>
+    <div class="uk-align-right">
+        {{ comment_hotel.commentDate|date("d/m/Y") }}
+       </div> 
+    </header>
+    <div class="uk-comment-body">
+    {{ comment_hotel.comment|raw }}
+    </div>
+    <div class="uk-align-right">
+    {{ include('comment_hotel/_delete.html.twig') }}
+    </div>
+    <br>
+</div>
     {% endfor %}
+<a class="uk-margin-medium-left uk-margin-medium-bottom uk-button uk-button-default uk-box-shadow-large uk-border-pill" href="#" uk-totop uk-scroll></a>    
 {% endblock %}

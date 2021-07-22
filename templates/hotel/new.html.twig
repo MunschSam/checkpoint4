@@ -3,9 +3,14 @@
 {% block title %}New Hotel{% endblock %}
 
 {% block body %}
-    <h1>Create new Hotel</h1>
+    <div class="uk-flex">
+    <div class="uk-margin-medium-left">
+        <h1>New Hotel :</h1>
+    </div>
+    <a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" uk-icon="icon: arrow-left" href="{{ path('hotel_index') }}"></a>
+    </div>
 
     {{ include('hotel/_form.html.twig') }}
 
-    <a href="{{ path('hotel_index') }}">back to list</a>
+    
 {% endblock %}

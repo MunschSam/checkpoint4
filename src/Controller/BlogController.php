@@ -103,7 +103,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="blog_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="blog_delete", methods={"POST"})
      */
     public function delete(Request $request, Blog $blog): Response
     {
@@ -111,6 +111,7 @@ class BlogController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($blog);
             $entityManager->flush();
+            
         }
 
         return $this->redirectToRoute('blog_index');

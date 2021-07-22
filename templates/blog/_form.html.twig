@@ -1,4 +1,16 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="uk-margin-medium-left uk-margin-medium-right">
+    {{ form_start(form) }}
+        <label class="uk-form-label uk-label uk-border-rounded">Miniature :</label>
+            {{ form_widget(form.pictureFile, {'attr': {'class': 'uk-form-width-medium uk-margin-bottom'}}) }}
+        <div class="uk-flex uk-margin-bottom">
+        <label class="uk-form-label uk-label uk-border-rounded">Titre :</label>
+            {{ form_widget(form.sujet, {'attr': {'class': 'uk-form-width-medium uk-margin-right'}}) }}
+        <label class="uk-form-label uk-label uk-border-rounded">Description :</label>
+            {{ form_widget(form.shortDescription, {'attr': {'class': 'uk-form-width-large'}}) }}
+        </div>
+        <br>
+        <label class="uk-form-label uk-label uk-border-rounded">Contenu :</label>
+            {{ form_widget(form.contenu, {'attr': {'class': 'uk-form-width-medium'}}) }}
+        <br>
+    <button class="uk-button uk-button-default uk-box-shadow-large uk-border-pill uk-margin-bottom">valider</button>
 {{ form_end(form) }}

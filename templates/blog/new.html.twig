@@ -3,9 +3,13 @@
 {% block title %}New Blog{% endblock %}
 
 {% block body %}
-    <h1>Create new Blog</h1>
-
+    <div class="uk-flex">
+    <div class="uk-margin-medium-left">
+        <h1>New Post :</h1>
+    </div>
+    <a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" uk-icon="icon: arrow-left" href="{{ path('blog_index') }}"></a>
+    </div>
+    
     {{ include('blog/_form.html.twig') }}
 
-    <a href="{{ path('blog_index') }}">back to list</a>
 {% endblock %}

@@ -14,7 +14,8 @@ class CommentRestaurantType extends AbstractType
     {
         $builder
             ->add('comment', CKEditorType::class, [
-                'config_name' => 'comment_config'
+                'config_name' => 'comment_config',
+                "label" => false
             ])
         ;
     }

@@ -3,9 +3,13 @@
 {% block title %}New Restaurant{% endblock %}
 
 {% block body %}
-    <h1>Create new Restaurant</h1>
+    <div class="uk-flex">
+    <div class="uk-margin-medium-left">
+        <h1>New Restaurant :</h1>
+    </div>
+    <a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" uk-icon="icon: arrow-left" href="{{ path('restaurant_index') }}"></a>
+    </div>
 
     {{ include('restaurant/_form.html.twig') }}
 
-    <a href="{{ path('restaurant_index') }}">back to list</a>
 {% endblock %}

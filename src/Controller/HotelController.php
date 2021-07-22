@@ -103,7 +103,7 @@ class HotelController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="hotel_delete", methods={"POST"})
+     * @Route("/deleteHotel/{id}", name="hotel_delete", methods={"POST"})
      */
     public function delete(Request $request, Hotel $hotel): Response
     {
@@ -126,7 +126,7 @@ class HotelController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($commentHotel);
             $entityManager->flush();
-            return $this->redirectToRoute('hotel_show', ['id' => $commentHotel->getHotel()->getId()]);
+            return $this->redirectToRoute('hotel_show', ['slug' => $commentHotel->getHotel()->getSlug()]);
         }
         return $this->render('comment_hotel/_delete.html.twig', [
             'comment_hotel' => $commentHotel,

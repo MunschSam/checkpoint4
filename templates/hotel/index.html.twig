@@ -3,41 +3,32 @@
 {% block title %}Hotel index{% endblock %}
 
 {% block body %}
-    <h1>Hotel index</h1>
+    <div class="uk-text-center">
+    <h1>Hotel</h1>
+    </div>
+<a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" uk-icon="icon: plus" href="{{ path('hotel_new') }}"></a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Picture</th>
-                <th>ShortDescription</th>
-                <th>Contenu</th>
-                <th>Date</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+     <div class="uk-child-width-1-3@m" uk-grid>
+
         {% for hotel in hotels %}
-            <tr>
-                <td>{{ hotel.id }}</td>
-                <td>{{ hotel.picture }}</td>
-                <td>{{ hotel.shortDescription }}</td>
-                <td>{{ hotel.contenu|raw }}</td>
-                <td>{{ hotel.date ? hotel.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ hotel.updatedAt ? hotel.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('hotel_show', {'slug': hotel.slug}) }}">show</a>
-                    <a href="{{ path('hotel_edit', {'slug': hotel.slug}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('hotel_new') }}">Create new</a>
+            <section>
+                <div class ="uk-margin-medium-top uk-margin-medium-left uk-margin-medium-right uk-margin-bottom uk-card uk-card-default uk-card-body uk-border-rounded">
+                <div>
+                    <h2>{{ hotel.name|raw }}</h2>
+                </div>
+                <div class="uk-flex uk-flex-center uk-margin-top">
+                    <img class="uk-border-rounded" src="{{ vich_uploader_asset(hotel, "pictureFile") }}">
+                </div>
+
+                <div class="uk-margin-bottom uk-margin-top uk-card-medium uk-card-default uk-card-body uk-border-rounded uk-text-small uk-text-truncate">
+                    {{ hotel.shortDescription|raw }}
+                </div>
+
+                <a class="uk-button uk-button-default uk-box-shadow-large uk-border-pill" uk-icon="icon: arrow-right" href="{{ path('hotel_show', {slug: hotel.slug}) }}"></a>
+                </div>
+            </section>
+
+        {% endfor %}
+        </div>
 {% endblock %}

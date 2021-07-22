@@ -3,6 +3,42 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <h1>Welcome on your project 3</h1>
-    <img src="https://media.giphy.com/media/hS58Kb2OOCMPS/giphy.gif" alt="Dewey dancing">
+    <div class="uk-width-3-4 uk-align-center">
+    <div class="uk-width uk-align-center "uk-slideshow="autoplay: true">
+    <ul class="uk-slideshow-items">
+        <li>
+            <img src="/images/home/slide1.jpeg" alt="" uk-cover>
+        </li>
+        <li>
+            <img src="/images/home/slide2.jpeg" alt="" uk-cover>
+        </li>
+        <li>
+            <img src="/images/home/slide3.jpeg" alt="" uk-cover>
+        </li>
+    </ul>   
+</div>
+</div>
+
+<div class="uk-flex"> 
+<div class="uk-width-1-2 uk-flex-auto uk-flex uk-flex-wrap uk-flex-center">
+
+{% for blog in blogs %}
+<div class="uk-card uk-card-default uk-card-body uk-width-1-3@m uk-margin-left uk-text-truncate uk-margin-bottom uk-border-rounded uk-text-small ">
+        <img class="uk-margin-bottom" src="{{ vich_uploader_asset(blog, "pictureFile") }}"/>
+
+        <div>
+        <div>{{ blog.shortDescription|raw }}</div>
+        <a class="uk-align-right uk-button uk-button-default uk-box-shadow-large uk-border-pill" uk-icon="icon: arrow-right" href="{{ path('blog_show', {slug: blog.slug}) }}"></a>
+        </div>
+</div>
+
+{% endfor %}
+
+
+</div>
+<div class="uk-card uk-card-default uk-card-body uk-width-1-3@m uk-margin-left uk-margin-xlarge-right uk-margin-bottom uk-border-rounded uk-text-small ">
+<h1>News :</h1>
+<h2>work in progress</h2>
+</div>
+</div>
 {% endblock %}

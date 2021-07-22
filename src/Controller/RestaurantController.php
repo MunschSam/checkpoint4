@@ -72,7 +72,7 @@ class RestaurantController extends AbstractController
             $entityManager->persist($commentRestaurant);
             $entityManager->flush();
 
-            return $this->redirectToRoute('restaurant_show', ['id' => $restaurant->getId()]);
+            return $this->redirectToRoute('restaurant_show', ['slug' => $restaurant->getSlug()]);
         }
 
         return $this->render('restaurant/show.html.twig', [
@@ -104,7 +104,7 @@ class RestaurantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="restaurant_delete", methods={"POST"})
+     * @Route("/deleteRestaurant/{id}", name="restaurant_delete", methods={"POST"})
      */
     public function delete(Request $request, Restaurant $restaurant): Response
     {
@@ -129,7 +129,7 @@ class RestaurantController extends AbstractController
             $entityManager->remove($commentRestaurant);
             $entityManager->flush();
             /** @phpstan-ignore-next-line */
-            return $this->redirectToRoute('restaurant_show', ['id' => $commentRestaurant->getRestaurant()->getId()]);
+            return $this->redirectToRoute('restaurant_show', ['slug' => $commentRestaurant->getRestaurant()->getSlug()]);
         }
         return $this->render('comment_restaurant/_delete.html.twig', [
             'comment_restaurant' => $commentRestaurant,
