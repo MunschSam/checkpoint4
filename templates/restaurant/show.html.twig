@@ -35,10 +35,16 @@
     <a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" href="{{ path('restaurant_index') }}">Retour</a>
 
 
-    
+    {% if app.user %}
     <div class="uk-card uk-card-default uk-width-1-2 uk-text-center uk-align-center uk-border-rounded uk-box-shadow-large">
 <p class="uk-margin uk-padding-small uk-text-meta uk-text-left">Laiser un commentaire</p>
 {% include('comment_restaurant/_form.html.twig') %}
+{% else %}
+    <div class="uk-flex uk-flex-center uk-card uk-card-default uk-width-1-2 uk-align-center uk-border-rounded uk-box-shadow-large">
+        <p>
+        <a href="{{ path('app_login') }}">Connecter vous pour laisser un commentaire</a></p>
+    </div>
+{% endif %}
 </div>
 
     {% for comment_restaurant in restaurant.commentRestaurants|reverse %}

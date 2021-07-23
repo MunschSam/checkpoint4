@@ -14,13 +14,17 @@
                 <li><a href="{{ path('blog_index') }}">Blog</a></li>
                 <li><a href="{{ path('review_new') }}">Demander une review</a></li>
             </ul>
+    <div class="uk-margin-large-left">        
             {% if app.user %}
     {{ app.user.email }}
-    <a href="{{ path('app_logout') }}"> Se déconnecter</a>
+    <a class="uk-margin-left" href="{{ path('app_logout') }}"> Se déconnecter</a>
 {% else %}
     <a href="{{ path('app_login') }}"> Se connecter</a>
+    <a class="uk-margin-left" href="{{ path('app_register') }}"> S'inscrire</a>
 {% endif %}
+</div>
         </div></div>
+    
 
     </div>
 </nav>
