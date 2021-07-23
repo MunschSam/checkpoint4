@@ -13,6 +13,7 @@ use App\Entity\CommentHotel;
 use App\Form\CommentHotelType;
 use App\Repository\CommentHotelRepository;
 use App\Service\Slugify;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/hotel")
@@ -22,10 +23,17 @@ class HotelController extends AbstractController
     /**
      * @Route("/", name="hotel_index", methods={"GET"})
      */
-    public function index(HotelRepository $hotelRepository): Response
+    public function index(HotelRepository $hotelRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $donnees = $this->getDoctrine()->getRepository(Hotel::class)->findBy([],['date' => 'desc']);
+
+        $hotel = $paginator->paginate(
+            $donnees, 
+            $request->query->getInt('page', 1),3
+        );
+
         return $this->render('hotel/index.html.twig', [
-            'hotels' => $hotelRepository->findAll(),
+            'hotels' => $hotel,
         ]);
     }
 

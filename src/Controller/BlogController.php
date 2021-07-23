@@ -13,6 +13,7 @@ use App\Entity\CommentBlog;
 use App\Form\CommentBlogType;
 use App\Repository\CommentBlogRepository;
 use App\Service\Slugify;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/blog")
@@ -22,10 +23,16 @@ class BlogController extends AbstractController
     /**
      * @Route("/", name="blog_index", methods={"GET"})
      */
-    public function index(BlogRepository $blogRepository): Response
+    public function index(BlogRepository $blogRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $donnees = $this->getDoctrine()->getRepository(Blog::class)->findBy([],['date' => 'desc']);
+
+        $blog = $paginator->paginate(
+            $donnees, 
+            $request->query->getInt('page', 1),6
+        );
         return $this->render('blog/index.html.twig', [
-            'blogs' => $blogRepository->findAll(),
+            'blogs' => $blog,
         ]);
     }
 

@@ -34,5 +34,7 @@
         {% endfor %}
         </div>
 
-    <a href="{{ path('blog_new') }}">Create new</a>
+    <div class="uk-margin-xlarge-left uk-margin-bottom">
+{{ knp_pagination_render(blogs) }}
+</div>
 {% endblock %}

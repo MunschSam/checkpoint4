@@ -13,6 +13,7 @@ use App\Entity\CommentRestaurant;
 use App\Form\CommentRestaurantType;
 use App\Repository\CommentRestaurantRepository;
 use App\Service\Slugify;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/restaurant")
@@ -22,10 +23,17 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/", name="restaurant_index", methods={"GET"})
      */
-    public function index(RestaurantRepository $restaurantRepository): Response
+    public function index(RestaurantRepository $restaurantRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $donnees = $this->getDoctrine()->getRepository(Restaurant::class)->findBy([],['date' => 'desc']);
+
+        $restaurant = $paginator->paginate(
+            $donnees, 
+            $request->query->getInt('page', 1),2
+        );
+
         return $this->render('restaurant/index.html.twig', [
-            'restaurants' => $restaurantRepository->findAll(),
+            'restaurants' => $restaurant,
         ]);
     }
 
