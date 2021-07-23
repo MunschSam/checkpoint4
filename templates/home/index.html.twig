@@ -27,7 +27,7 @@
         <img class="uk-margin-bottom" src="{{ vich_uploader_asset(blog, "pictureFile") }}"/>
 
         <div>
-        <div>{{ blog.shortDescription|raw }}</div>
+        <div class="uk-margin-bottom">{{ blog.shortDescription|raw }}</div>
         <a class="uk-align-right uk-button uk-button-default uk-box-shadow-large uk-border-pill" uk-icon="icon: arrow-right" href="{{ path('blog_show', {slug: blog.slug}) }}"></a>
         </div>
 </div>

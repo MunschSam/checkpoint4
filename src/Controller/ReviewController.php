@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/review")
@@ -18,7 +20,7 @@ class ReviewController extends AbstractController
     /**
      * @Route("/", name="review_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $review = new Review();
         $form = $this->createForm(ReviewType::class, $review);
@@ -29,7 +31,15 @@ class ReviewController extends AbstractController
             $entityManager->persist($review);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home_index');
+            $email = (new Email())
+            ->from('c5e5de148a-b1856b@inbox.mailtrap.io')
+            ->to('c5e5de148a-b1856b@inbox.mailtrap.io')
+            ->subject('Une nouvelle review est demandé')
+            ->html($this->renderView('review/demandeReview.html.twig', ['review' => $review]));
+
+        $mailer->send($email);
+
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('review/new.html.twig', [
