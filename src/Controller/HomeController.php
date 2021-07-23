@@ -16,7 +16,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/home", name="home")
      */
-    public function index(BlogRepository $blogRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $donnees = $this->getDoctrine()->getRepository(Blog::class)->findBy([],['date' => 'desc']);
 

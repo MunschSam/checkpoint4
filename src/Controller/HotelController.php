@@ -23,7 +23,7 @@ class HotelController extends AbstractController
     /**
      * @Route("/", name="hotel_index", methods={"GET"})
      */
-    public function index(HotelRepository $hotelRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $donnees = $this->getDoctrine()->getRepository(Hotel::class)->findBy([],['date' => 'desc']);
 

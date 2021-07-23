@@ -23,7 +23,7 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/", name="restaurant_index", methods={"GET"})
      */
-    public function index(RestaurantRepository $restaurantRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $donnees = $this->getDoctrine()->getRepository(Restaurant::class)->findBy([],['date' => 'desc']);
 
