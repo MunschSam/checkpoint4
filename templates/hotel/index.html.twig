@@ -6,8 +6,9 @@
     <div class="uk-text-center">
     <h1>Hotel</h1>
     </div>
+    {% if is_granted("ROLE_ADMIN") %}
 <a class="uk-button uk-button-default uk-margin-medium-bottom uk-margin-medium-left uk-margin-top uk-box-shadow-large uk-border-pill" uk-icon="icon: plus" href="{{ path('hotel_new') }}"></a>
-
+{% endif  %}
      <div class="uk-child-width-1-3@m" uk-grid>
 
         {% for hotel in hotels %}

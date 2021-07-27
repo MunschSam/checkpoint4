@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,27 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommentHotel::class, mappedBy="auteur")
+     */
+    private $commentHotels;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommentRestaurant::class, mappedBy="auteur")
+     */
+    private $commentRestaurants;
+
+    public function __construct()
+    {
+        $this->commentHotels = new ArrayCollection();
+        $this->commentRestaurants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -130,6 +153,78 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentHotel[]
+     */
+    public function getCommentHotels(): Collection
+    {
+        return $this->commentHotels;
+    }
+
+    public function addCommentHotel(CommentHotel $commentHotel): self
+    {
+        if (!$this->commentHotels->contains($commentHotel)) {
+            $this->commentHotels[] = $commentHotel;
+            $commentHotel->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentHotel(CommentHotel $commentHotel): self
+    {
+        if ($this->commentHotels->removeElement($commentHotel)) {
+            // set the owning side to null (unless already changed)
+            if ($commentHotel->getAuteur() === $this) {
+                $commentHotel->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentRestaurant[]
+     */
+    public function getCommentRestaurants(): Collection
+    {
+        return $this->commentRestaurants;
+    }
+
+    public function addCommentRestaurant(CommentRestaurant $commentRestaurant): self
+    {
+        if (!$this->commentRestaurants->contains($commentRestaurant)) {
+            $this->commentRestaurants[] = $commentRestaurant;
+            $commentRestaurant->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentRestaurant(CommentRestaurant $commentRestaurant): self
+    {
+        if ($this->commentRestaurants->removeElement($commentRestaurant)) {
+            // set the owning side to null (unless already changed)
+            if ($commentRestaurant->getAuteur() === $this) {
+                $commentRestaurant->setAuteur(null);
+            }
+        }
 
         return $this;
     }

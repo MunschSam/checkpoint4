@@ -75,6 +75,7 @@ class RestaurantController extends AbstractController
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $commentRestaurant->setCommentDate(new \DateTime());
             $commentRestaurant->setRestaurant($restaurant);
+            $commentRestaurant->setAuteur($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentRestaurant);

@@ -11,6 +11,7 @@ use App\Repository\BlogRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+
 class HomeController extends AbstractController
 {
     /**
@@ -25,7 +26,7 @@ class HomeController extends AbstractController
             $request->query->getInt('page', 1),2
         );
         return $this->render('home/index.html.twig',[
-             "blogs"=>$blog
+             "blogs"=>$blog, 
         ]);
     }
 }

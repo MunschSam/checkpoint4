@@ -32,6 +32,13 @@ class CommentRestaurant
      */
     private $restaurant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commentRestaurants")
+     */
+    private $auteur;
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,4 +79,18 @@ class CommentRestaurant
 
         return $this;
     }
+
+    public function getAuteur(): ?User
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?User $auteur): self
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    
 }

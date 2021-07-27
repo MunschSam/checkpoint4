@@ -13,7 +13,10 @@
 <div class="uk-card uk-card-default uk-card-body uk-margin-left uk-margin-bottom uk-border-rounded uk-align-center">
     {{ form_start(registrationForm) }}
     <div class="uk-margin-bottom">
-        
+        <div class="uk-margin-bottom">
+        <label class="uk-form-label uk-label uk-border-rounded">Nom :</label>
+            {{ form_widget(registrationForm.name, {'attr': {'class': 'uk-form-width-small uk-margin-bottom'}}) }}
+        </div>
         <label class="uk-form-label uk-label uk-border-rounded">Adresse :</label>
             {{ form_widget(registrationForm.email, {'attr': {'class': 'uk-form-width-small uk-margin-bottom'}}) }}
         </div>

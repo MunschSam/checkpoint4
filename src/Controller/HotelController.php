@@ -75,6 +75,7 @@ class HotelController extends AbstractController
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $commentHotel->setCommentDate(new \DateTime());
             $commentHotel->setHotel($hotel);
+            $commentHotel->setAuteur($this->getUser());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentHotel);

@@ -6,7 +6,9 @@
 
     <h1 class="uk-text-center">{{restaurant.name}}</h1>
 <div class="uk-margin-medium-top uk-margin-right uk-margin-medium-left">
+{% if is_granted("ROLE_ADMIN") %}
     <a class="uk-button uk-button-default uk-box-shadow-large uk-border-pill" href="{{ path('restaurant_edit', {'slug': restaurant.slug}) }}">editer</a>
+    {% endif %}
 </div>
              
     <div class="uk-margin-medium-top uk-margin-medium-left uk-margin-medium-right uk-card uk-card-default uk-card-body uk-border-rounded">
@@ -56,15 +58,20 @@
             </div>
         </div>
     <div class="uk-align-right">
+    <p class="uk-text-muted uk-margin-small-left">{{ comment_restaurant.auteur.name }}</p>
         {{ comment_restaurant.commentDate|date("d/m/Y") }}
        </div> 
     </header>
     <div class="uk-comment-body">
     {{ comment_restaurant.comment|raw }}
     </div>
+    {% if app.user %}
+        {% if app.user.id == comment_restaurant.auteur.id or is_granted("ROLE_ADMIN") %}
     <div class="uk-align-right">
     {{ include('comment_restaurant/_delete.html.twig') }}
     </div>
+    {% endif %}
+    {% endif %}
     <br>
 </div>
     {% endfor %}

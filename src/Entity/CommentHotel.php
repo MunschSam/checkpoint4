@@ -32,6 +32,11 @@ class CommentHotel
      */
     private $hotel;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commentHotels")
+     */
+    private $auteur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class CommentHotel
     public function setHotel(?Hotel $hotel): self
     {
         $this->hotel = $hotel;
+
+        return $this;
+    }
+
+    public function getAuteur(): ?User
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?User $auteur): self
+    {
+        $this->auteur = $auteur;
 
         return $this;
     }

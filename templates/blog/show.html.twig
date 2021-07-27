@@ -6,7 +6,9 @@
     <h1 class="uk-text-center">{{blog.sujet}}</h1>
 
 <div class="uk-margin-medium-top uk-margin-right uk-margin-medium-left">
+{% if is_granted("ROLE_ADMIN") %}
     <a class="uk-button uk-button-default uk-box-shadow-large uk-border-pill" href="{{ path('blog_edit', {'slug': blog.slug}) }}">editer</a>
+    {% endif %}
 </div>
 
     <article>

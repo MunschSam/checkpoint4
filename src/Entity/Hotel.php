@@ -222,4 +222,6 @@ class Hotel
 
         return $this;
     }
+
+    
 }
